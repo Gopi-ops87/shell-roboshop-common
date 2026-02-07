@@ -4,7 +4,7 @@ source ./common.sh
 
 app_name=catalogue
 
-SCRIPT_DIR=$PWD
+
 app_setup
 nodejs_setup
 systemd_setup
