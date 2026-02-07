@@ -2,7 +2,7 @@
 
 bash ./common.sh
 
-check root
+check_root
 
 dnf module disable redis -y  &>>$LOG_FILE
 VALIDATE $? "Disabling redis"
