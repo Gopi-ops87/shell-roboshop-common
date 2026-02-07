@@ -14,6 +14,7 @@ START_TIME=$(date +%s)
 MONGODB_HOST=mongodb.dev28p.online
 SCRIPT_DIR=$PWD
 mkdir -p $LOGS_FOLDER
+REDIS_HOST=redis.dev28p.online
 
 echo "script started executed at: $(date)" | tee -a $LOG_FILE
 
