@@ -78,11 +78,11 @@ systemd_setup(){
 }
 
 java_setup(){
-    dnf install maven -y
+    dnf install maven -y &>>$LOG_FILE
     VALIDATE $? "installing maven"
-    mvn clean package 
+    mvn clean package &>>$LOG_FILE
     VALIDATE $? "packing the application"
-    mv target/shipping-1.0.jar shipping.jar 
+    mv target/shipping-1.0.jar shipping.jar &>>$LOG_FILE
     VALIDATE $? "renaming the artifacts"
 }
 
