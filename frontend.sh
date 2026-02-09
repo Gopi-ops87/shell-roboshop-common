@@ -7,7 +7,7 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
-LOGS_FOLDER="/var/log/shell-roboshop"
+LOGS_FOLDER="/var/log/shell-roboshop-common"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 SCRIPT_DIR=$PWD
 MONGODB_HOST="mongodb.dev28p.online"
@@ -15,7 +15,7 @@ LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"  # /var/log/shell-roboshop/12-cart.log
 
 mkdir -p "$LOGS_FOLDER"
 START_TIME=$(date +%s)
-echo "script started executed at: $(date)" 
+echo "script started executed at: $(date)" | tee -a $LOG_FILE
 
 if [ $USER_ID -ne 0 ]; then
     echo "ERROR:: please use root access"
@@ -33,7 +33,9 @@ VALIDATE() {   #function to receive inputs through args just like shell script a
 }
 
 dnf module disable nginx -y &>>$LOG_FILE
+VALIDATE $? "disabling nginx"
 dnf module enable nginx:1.24 -y &>>$LOG_FILE
+VALIDATE $? "Enabling nginx"
 dnf install nginx -y &>>$LOG_FILE
 VALIDATE $? "Installing NGINX"
 
@@ -41,12 +43,13 @@ systemctl enable nginx  &>>$LOG_FILE
 systemctl start nginx &>>$LOG_FILE
 VALIDATE $? "Starting NGINX"
 
-rm -rf /usr/share/nginx/html/*  &>>$LOG_FILE
+rm -rf /usr/share/nginx/html/*  
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend-v3.zip &>>$LOG_FILE
 cd /usr/share/nginx/html &>>$LOG_FILE
 unzip /tmp/frontend.zip &>>$LOG_FILE
+VALIDATE $? "Downloading frontend"
 
-rm -rf /etc/nginx/nginx.conf &>>$LOG_FILE
+rm -rf /etc/nginx/nginx.conf 
 cp $SCRIPT_DIR/nginx.conf /etc/nginx/nginx.conf &>>$LOG_FILE
 VALIDATE $? "Copying nginx.conf"
 
