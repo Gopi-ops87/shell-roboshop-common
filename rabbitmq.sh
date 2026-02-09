@@ -2,7 +2,7 @@
 
 source ./common.sh
 
-root_check
+check_root
 
 cp $SCRIPT_DIR/rabbitmq.repo /etc/yum.repos.d/rabbitmq.repo &>>$LOG_FILE
 VALIDATE $? "Adding raabitmq repo"
