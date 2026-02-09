@@ -86,6 +86,15 @@ java_setup(){
     VALIDATE $? "renaming the artifacts"
 }
 
+python_setup(){
+    dnf install python3 gcc python3-devel -y &>>$LOG_FILE
+    VALIDATE $? "Installing python"
+    pip3 install -r requirements.txt &>>$LOG_FILE
+    VALIDATE $? "installing dependencies"
+
+
+}
+
 app_restart(){
     systemctl restart $app_name
     VALIDATE $? "Restarting $app_name"
