@@ -15,6 +15,7 @@ MONGODB_HOST=mongodb.dev28p.online
 SCRIPT_DIR=$PWD
 mkdir -p $LOGS_FOLDER
 REDIS_HOST=redis.dev28p.online
+MYSQL_HOST=mysql.dev28p.online
 
 echo "script started executed at: $(date)" | tee -a $LOG_FILE
 
@@ -76,12 +77,20 @@ systemd_setup(){
     VALIDATE $? "enable $app_name"
 }
 
+java_setup(){
+    dnf install maven -y
+    VALIDATE $? "installing maven"
+    mvn clean package 
+    VALIDATE $? "packing the application"
+    mv target/shipping-1.0.jar shipping.jar 
+    VALIDATE $? "renaming the artifacts"
+}
+
 app_restart(){
     systemctl restart $app_name
     VALIDATE $? "Restarting $app_name"
 
 }
-
 
 print_total_time(){
     END_TIME=$(date +%s)
