@@ -6,11 +6,12 @@ G="\e[32m"
 Y="\e[33m"
 N="\e[0m"
 
+SOURCE_DIR=$1
+DEST_DIR=$2
 LOGS_FOLDER="/var/log/shell-roboshop-common"
 SCRIPT_NAME=$( echo $0 | cut -d "." -f1 )
 LOG_FILE="$LOGS_FOLDER/$SCRIPT_NAME.log"
-SOURCE_DIR=$1
-DEST_DIR=$2
+
 
 mkdir -p $LOGS_FOLDER
 
