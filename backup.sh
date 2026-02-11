@@ -14,7 +14,7 @@ mkdir -p $LOGS_FOLDER
 
 echo "Script started executed at: $(date)" | tee -a $LOG_FILE
 
-if [ $USER_ID -ne 0 ]; then
+if [ $USERID -ne 0 ]; then
     echo "ERROR:: please use root access"
     exit 1  # failure is other than 0
 fi
